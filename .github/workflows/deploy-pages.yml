@@ -3,7 +3,7 @@ name: Build and deploy to GitHub Pages
 on:
   push:
     branches:
-      - main   # change to your default branch name if different (e.g. "master")
+      - main  # change if your default branch is different
 
 permissions:
   contents: read
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 jobs:
-  build_and_deploy:
+  build_and_upload:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,12 +21,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'    # adjust if you need a different Node version
+          node-version: '20'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: '10.4.1'    # matches your packageManager; adjust if desired
+          version: '10.4.1'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -40,7 +40,7 @@ jobs:
           path: dist/public
 
   deploy:
-    needs: build_and_deploy
+    needs: build_and_upload
     runs-on: ubuntu-latest
     permissions:
       pages: write
